@@ -8,8 +8,7 @@ import {
   MenubarSeparator,
 } from "@workspace/ui/components/menubar";
 import { X, Menu } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 const menuItems = [
   {
@@ -101,5 +100,28 @@ export function MenuMobile({
         </div>
       )}
     </>
+  );
+}
+
+export function MainMenu({
+  isMobile,
+  setMobileMenuOpen,
+  mobileMenuOpen,
+}: {
+  setMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
+  mobileMenuOpen: boolean;
+  isMobile: boolean;
+}) {
+  return (
+    <div className="w-full p-2 border-b relative">
+      {isMobile ? (
+        <MenuMobile
+          setMobileMenuOpen={setMobileMenuOpen}
+          mobileMenuOpen={mobileMenuOpen}
+        />
+      ) : (
+        <MenuDesktop />
+      )}
+    </div>
   );
 }
