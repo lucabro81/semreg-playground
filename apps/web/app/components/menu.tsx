@@ -1,32 +1,25 @@
-import { useResponsive } from "@/hooks/responsive";
+import { useResponsive } from "@/providers/response-provider";
 import { Button } from "@workspace/ui/components/button";
 import {
   Menubar,
-  MenubarMenu,
-  MenubarTrigger,
   MenubarContent,
   MenubarItem,
+  MenubarMenu,
   MenubarSeparator,
+  MenubarTrigger,
 } from "@workspace/ui/components/menubar";
-import { X, Menu } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { Menu, X } from "lucide-react";
+import { Fragment } from "react";
 
-const menuItems = [
+type MenuItem = {
+  label: string;
+  items: string[];
+};
+
+const menuItems: MenuItem[] = [
   {
-    label: "File",
+    label: "Documentation",
     items: ["New", "Open", "Save", "Save As"],
-  },
-  {
-    label: "Edit",
-    items: ["Cut", "Copy", "Paste"],
-  },
-  {
-    label: "View",
-    items: ["Settings", "Preferences"],
-  },
-  {
-    label: "Help",
-    items: ["Documentation", "About"],
   },
 ];
 
@@ -38,10 +31,10 @@ export function MenuDesktop() {
           <MenubarTrigger>{menu.label}</MenubarTrigger>
           <MenubarContent>
             {menu.items.map((item, index, array) => (
-              <>
+              <Fragment key={item}>
                 <MenubarItem key={item}>{item}</MenubarItem>
                 {index === 1 && array.length > 3 && <MenubarSeparator />}
-              </>
+              </Fragment>
             ))}
           </MenubarContent>
         </MenubarMenu>
@@ -50,13 +43,28 @@ export function MenuDesktop() {
   );
 }
 
-export function MenuMobile({
-  setMobileMenuOpen,
-  mobileMenuOpen,
-}: {
-  setMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
-  mobileMenuOpen: boolean;
-}) {
+export function MenuMobileItem({ menu }: { menu: MenuItem }) {
+  return (
+    <div key={menu.label} className="px-4 py-2">
+      <h3 className="text-sm font-medium mb-2">{menu.label}</h3>
+      <div className="space-y-1 ml-2">
+        {menu.items.map((item) => (
+          <Button
+            key={item}
+            variant="ghost"
+            className="w-full justify-start text-sm"
+          >
+            {item}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function MenuMobile() {
+  const { mobileMenuOpen, setMobileMenuOpen } = useResponsive();
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -76,27 +84,10 @@ export function MenuMobile({
         )}
       </Button>
 
-      {/* Mobile menu dropdown */}
       {mobileMenuOpen && (
         <div className="absolute left-0 top-full w-full bg-background border shadow-md z-50 py-4">
-          <div className="px-4 pb-2 border-b mb-2">
-            <h2 className="font-medium">Menu</h2>
-          </div>
           {menuItems.map((menu) => (
-            <div key={menu.label} className="px-4 py-2">
-              <h3 className="text-sm font-medium mb-2">{menu.label}</h3>
-              <div className="space-y-1 ml-2">
-                {menu.items.map((item) => (
-                  <Button
-                    key={item}
-                    variant="ghost"
-                    className="w-full justify-start text-sm"
-                  >
-                    {item}
-                  </Button>
-                ))}
-              </div>
-            </div>
+            <MenuMobileItem key={menu.label} menu={menu} />
           ))}
         </div>
       )}
@@ -105,18 +96,11 @@ export function MenuMobile({
 }
 
 export function MainMenu() {
-  const { isMobile, mobileMenuOpen, setMobileMenuOpen } = useResponsive();
+  const { isMobile } = useResponsive();
 
   return (
     <div className="w-full p-2 border-b relative">
-      {isMobile ? (
-        <MenuMobile
-          setMobileMenuOpen={setMobileMenuOpen}
-          mobileMenuOpen={mobileMenuOpen}
-        />
-      ) : (
-        <MenuDesktop />
-      )}
+      {isMobile ? <MenuMobile /> : <MenuDesktop />}
     </div>
   );
 }
