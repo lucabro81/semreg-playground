@@ -1,53 +1,32 @@
 "use client";
 
+import { useDebounce } from "@/hooks/debounce";
+import { useResponsive } from "@/hooks/responsive";
 import { useSandbox } from "@/hooks/sandbox";
 import { Textarea } from "@workspace/ui/components/textarea";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import * as semregLib from "semreg";
-import { useDebounce } from "@/hooks/debounce";
-import { MainMenu, MenuDesktop, MenuMobile } from "./components/menu";
+import { MainMenu } from "./components/menu";
+
 export default function Page() {
-  const [isMobile, setIsMobile] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [result, setResult] = useState<RegExp | undefined>(undefined);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const { isMobile } = useResponsive();
   const sandbox = useSandbox<RegExp>({
     ...semregLib,
   });
   const debouncedSandbox = useDebounce(sandbox, 500);
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    checkIfMobile();
-
-    window.addEventListener("resize", checkIfMobile);
-
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
-
   const handleInputChange = async (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     setTextInput(text);
-
     const result = await debouncedSandbox(text);
-
     setResult(result);
   };
 
   return (
     <div className="flex flex-col h-svh">
-      <MainMenu
-        isMobile={isMobile}
-        setMobileMenuOpen={setMobileMenuOpen}
-        mobileMenuOpen={mobileMenuOpen}
-      />
+      <MainMenu />
 
       <div
         className={`flex flex-1 w-full ${isMobile ? "flex-col" : "flex-row"}`}

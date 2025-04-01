@@ -1,3 +1,4 @@
+import { useResponsive } from "@/hooks/responsive";
 import { Button } from "@workspace/ui/components/button";
 import {
   Menubar,
@@ -103,15 +104,9 @@ export function MenuMobile({
   );
 }
 
-export function MainMenu({
-  isMobile,
-  setMobileMenuOpen,
-  mobileMenuOpen,
-}: {
-  setMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
-  mobileMenuOpen: boolean;
-  isMobile: boolean;
-}) {
+export function MainMenu() {
+  const { isMobile, mobileMenuOpen, setMobileMenuOpen } = useResponsive();
+
   return (
     <div className="w-full p-2 border-b relative">
       {isMobile ? (
