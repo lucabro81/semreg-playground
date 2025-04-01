@@ -15,7 +15,7 @@ export const useResponsive = () => {
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
     return () => window.removeEventListener("resize", checkIfMobile);
-  });
+  }, [checkIfMobile]);
 
   return {
     isMobile,
