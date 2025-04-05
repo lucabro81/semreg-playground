@@ -36,4 +36,4 @@ npm-debug.log*
 *.pem
 .qodo
 
-public/semreg.worker.es.js
+apps/web/public/semreg.worker.es.js
