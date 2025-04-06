@@ -8,7 +8,7 @@ import { OutputArea } from "./components/output.area";
 
 export default function Page() {
   const [textInput, setTextInput] = useState("");
-  const [result, setResult] = useState<RegExp | undefined>(undefined);
+  const [result, setResult] = useState("");
   const { isMobile } = useResponsive();
 
   return (

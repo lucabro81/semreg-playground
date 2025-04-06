@@ -1,0 +1,29 @@
+.capturing-group {
+  background-color: darkblue;
+  color: white;
+}
+
+.capturing-group-start,
+.capturing-group-close {
+  background-color: blue;
+}
+
+.non-capturing-group {
+  background-color: darkred;
+  color: white;
+}
+
+.non-capturing-group-start,
+.non-capturing-group-close {
+  background-color: rgb(193, 0, 0);
+}
+
+.regex-charclass {
+  background-color: rgb(0, 102, 0);
+  color: white;
+}
+
+.regex-charclass-negated {
+  background-color: rgb(183, 255, 185);
+  color: black;
+}
