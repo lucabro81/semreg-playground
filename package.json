@@ -1,7 +1,19 @@
 {
-  "name": "shadcn-ui-monorepo",
-  "version": "0.0.1",
-  "private": true,
+  "name": "semreg-playground",
+  "author": "Luca Brognara",
+  "description": "A monorepo for a web app that allows you to test semreg expressions",
+  "version": "1.0.0",
+  "keywords": [
+    "semreg",
+    "regex",
+    "testing",
+    "semreg testing tool"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucabro81/semreg-playground"
+  },
+  "private": false,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
