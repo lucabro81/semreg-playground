@@ -34,7 +34,7 @@ jobs:
           # Sostituisci con la versione Node.js richiesta dal tuo progetto
           node-version: "20" # Esempio: usa 18, 20, etc.
           # Opzionale: Caching per il gestore pacchetti (es. npm)
-          cache: "npm" # Cambia in 'yarn' o 'pnpm' se usi quelli
+          cache: "pnpm" # Cambia in 'yarn' o 'pnpm' se usi quelli
 
       - name: Install Dependencies (from monorepo root)
         # Sostituisci il comando con quello corretto per il tuo gestore pacchetti
