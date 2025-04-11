@@ -1,0 +1,68 @@
+name: Deploy Next.js App to GitHub Pages
+
+# Triggera il workflow su push al branch 'main' (o il tuo branch principale)
+on:
+  push:
+    branches:
+      - main # Cambia se il tuo branch principale è diverso (es. master)
+  workflow_dispatch: # Permette l'avvio manuale dalla tab Actions
+
+# Permessi necessari per permettere all'action di pushare sul branch gh-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Imposta GITHUB_TOKEN con permessi di scrittura per deployare su GitHub Pages
+# concurrency:
+#   group: "pages" # Utile per evitare deploy multipli in parallelo sulla stessa pagina
+#   cancel-in-progress: true # Cancella run precedenti se ne parte una nuova
+
+jobs:
+  build-and-deploy:
+    # environment: # Opzionale: configura un ambiente di deploy in GitHub settings
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Sostituisci con la versione Node.js richiesta dal tuo progetto
+          node-version: "20" # Esempio: usa 18, 20, etc.
+          # Opzionale: Caching per il gestore pacchetti (es. npm)
+          cache: "npm" # Cambia in 'yarn' o 'pnpm' se usi quelli
+
+      - name: Install Dependencies (from monorepo root)
+        # Sostituisci il comando con quello corretto per il tuo gestore pacchetti
+        run: pnpm install --frozen-lockfile # Usa 'yarn install --frozen-lockfile' o 'pnpm install --frozen-lockfile' se necessario
+
+      - name: Build Next.js App
+        # === IMPORTANTE: Sostituisci questo comando con quello VERO per la TUA app ===
+        # Esempi (scegli quello adatto al tuo setup):
+        # run: npm run build --workspace=apps/my-next-app # Se usi npm workspace
+        # run: npx turbo run build --filter=my-next-app # Se usi Turborepo (sostituisci 'my-next-app' con il nome del package)
+        run: pnpm --filter web build # Se usi pnpm
+        # run: yarn workspace my-next-app build # Se usi yarn
+
+        # Assicurati che il NOME/PERCORSO dell'app sia corretto!
+        # === Fine sezione da modificare ===
+
+      - name: Create .nojekyll file # Necessario se hai basePath o file che iniziano con _
+        run: touch ./apps/web/out/.nojekyll # <-- Sostituisci il percorso alla cartella 'out' se diverso!
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # === IMPORTANTE: Specifica il percorso CORRETTO alla cartella 'out' ===
+          path: "./apps/web/out" # <-- Sostituisci con il percorso VERO alla cartella 'out'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Questa action prende l'artifact e lo deploya
