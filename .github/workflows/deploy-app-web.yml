@@ -28,6 +28,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -35,9 +38,6 @@ jobs:
           node-version: "20" # Esempio: usa 18, 20, etc.
           # Opzionale: Caching per il gestore pacchetti (es. npm)
           cache: "pnpm" # Cambia in 'yarn' o 'pnpm' se usi quelli
-
-      - name: Install pnpm
-        run: npm install -g pnpm
 
       - name: Install Dependencies (from monorepo root)
         # Sostituisci il comando con quello corretto per il tuo gestore pacchetti
