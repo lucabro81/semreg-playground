@@ -37,9 +37,7 @@ jobs:
           cache: "pnpm" # Cambia in 'yarn' o 'pnpm' se usi quelli
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        run: npm install -g pnpm
 
       - name: Install Dependencies (from monorepo root)
         # Sostituisci il comando con quello corretto per il tuo gestore pacchetti
