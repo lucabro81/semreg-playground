@@ -49,6 +49,10 @@ function isOperator(token: string): boolean {
   return /^[|{}?*+.]$/.test(token)
 }
 
+function encodeHTMLEntities(token: string): string {
+  return token.replace(/[\u00A0-\u9999<>&]/g, i => '&#' + i.charCodeAt(0) + ';')
+}
+
 export function analyzeRegex(pattern: string): string {
   let result = '';
 
@@ -106,7 +110,7 @@ export function analyzeRegex(pattern: string): string {
     }
 
     if (!skip) {
-      result += `<span class="${tokenClass}">${token}</span>`;
+      result += `<span class="${tokenClass}">${encodeHTMLEntities(token)}</span>`;
     }
 
   }

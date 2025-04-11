@@ -45,8 +45,8 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       semreg:
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.2.1
+        version: 1.2.1
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -2258,8 +2258,8 @@ packages:
   scheduler@0.25.0:
     resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
 
-  semreg@1.1.1:
-    resolution: {integrity: sha512-dlJR5Qo65PSdLgvYgt9DJfhMHYSD47Q+f3JqRx7gcDVZh0/0mxdQCoRR96SCrtfKA9/j8+rast55hFAmUQPvyg==}
+  semreg@1.2.1:
+    resolution: {integrity: sha512-cruMzcQYj0nvbFR+Bq5T49k4RkO7hBtLkllZyzqSXSPOixGdXifjVL6qF8dsciZ0mG+Zgy6q8DqXzfyDVNsIxA==}
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -4947,7 +4947,7 @@ snapshots:
 
   scheduler@0.25.0: {}
 
-  semreg@1.1.1: {}
+  semreg@1.2.1: {}
 
   semver@6.3.1: {}
 
