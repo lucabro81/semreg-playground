@@ -31,6 +31,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Next.js App
+        env:
+          NEXT_PUBLIC_BASE_PATH: "/semreg-playground"
         run: pnpm --filter web build
 
       - name: Create .nojekyll file
