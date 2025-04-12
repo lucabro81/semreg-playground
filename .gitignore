@@ -37,3 +37,4 @@ npm-debug.log*
 .qodo
 
 apps/web/public/semreg.worker.es.js
+apps/web/semreg-playground

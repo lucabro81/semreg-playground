@@ -15,7 +15,10 @@
   },
   "private": false,
   "scripts": {
+    "build:prepare-serve": "rm -rf apps/web/semreg-playground && mv apps/web/out apps/web/semreg-playground",
+    "build:pre-release": "DEPLOY_TARGET=\"gh-pages\" NEXT_PUBLIC_BASE_PATH=\"/semreg-playground\" pnpm --filter web build && pnpm build:prepare-serve",
     "build": "turbo build",
+    "start": "npx serve@latest apps/web",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""

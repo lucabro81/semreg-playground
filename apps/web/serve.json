@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/semreg-playground/",
+      "type": 302
+    }
+  ]
+}

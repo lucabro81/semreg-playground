@@ -1,8 +1,5 @@
 import { useEffect, useRef } from "react";
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig() || {};
-const basePath = publicRuntimeConfig?.basePath || '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export function useSandbox<T>() {
   const workerRef = useRef<Worker | null>(null);
