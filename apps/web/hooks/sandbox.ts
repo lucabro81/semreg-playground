@@ -1,4 +1,8 @@
 import { useEffect, useRef } from "react";
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig() || {};
+const basePath = publicRuntimeConfig?.basePath || '';
 
 export function useSandbox<T>() {
   const workerRef = useRef<Worker | null>(null);
@@ -7,7 +11,7 @@ export function useSandbox<T>() {
     if (typeof window !== "undefined") {
 
       // ref.: https://github.com/vercel/next.js/issues/74621#issuecomment-2585760180
-      const worker = new window.Worker('/semreg.worker.es.js', { type: 'module' });
+      const worker = new window.Worker(`${basePath}/semreg.worker.es.js`, { type: 'module' });
 
       worker.onerror = (error) => {
         console.error("Worker error:", error);
