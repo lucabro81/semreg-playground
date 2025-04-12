@@ -13,6 +13,7 @@
     "type": "git",
     "url": "https://github.com/lucabro81/semreg-playground"
   },
+  "homepage": "https://lucabro81.github.io/semreg-playground",
   "private": false,
   "scripts": {
     "build:prepare-serve": "rm -rf apps/web/semreg-playground && mv apps/web/out apps/web/semreg-playground",
