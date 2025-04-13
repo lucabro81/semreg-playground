@@ -8,7 +8,6 @@ import {
   useRef,
   SyntheticEvent,
   useEffect,
-  useState,
   KeyboardEvent,
   RefObject,
 } from "react";
@@ -19,7 +18,7 @@ import {
 } from "@/providers/function-docs-provider";
 import { cn } from "@workspace/ui/lib/utils";
 import { useAutocomplete } from "@/hooks/autocomplete";
-// Define a type for the caret position using DOMRect properties
+
 type CaretCoords = {
   top: number;
   left: number;
@@ -44,18 +43,12 @@ export function InputArea({
   const debouncedSandbox = useDebounce(sandbox, 500);
   const editableDivRef = useRef<HTMLDivElement>(null);
   const { functionDocs } = useFunctionDocs();
-
-  // const [caretPos, setCaretPos] = useState<CaretCoords>(null);
-  // const [suggestions, setSuggestions] = useState<FunctionDoc[]>([]);
-  // const [focusedSuggestionIndex, setFocusedSuggestionIndex] =
-  //   useState<number>(-1);
-  // const ignoreSuggestionsRef = useRef(false);
-
   const {
     caretPos,
     suggestions,
     focusedSuggestionIndex,
     ignoreSuggestionsRef,
+    updateCaretPosition,
     handleSelectionChange,
     handleKeyDown,
     insertSuggestion,
@@ -72,9 +65,9 @@ export function InputArea({
     if (ignoreSuggestionsRef.current) {
       ignoreSuggestionsRef.current = false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textInput]);
 
-  // --- Handle Input Event ---
   const handleInput = async (e: SyntheticEvent<HTMLDivElement>) => {
     const currentText = e.currentTarget.textContent || "";
     if (currentText !== textInput && !ignoreSuggestionsRef.current) {
@@ -97,172 +90,6 @@ export function InputArea({
       setResult("");
     }
   };
-
-  // // --- Function to update suggestions based on caret position ---
-  // const updateSuggestions = (currentText: string, caretOffset: number) => {
-  //   if (ignoreSuggestionsRef.current || !functionDocs) {
-  //     setSuggestions([]);
-  //     return;
-  //   }
-
-  //   let startIndex = caretOffset;
-  //   while (startIndex > 0 && /\w/.test(currentText[startIndex - 1] || "")) {
-  //     startIndex--;
-  //   }
-  //   const prefix = currentText.substring(startIndex, caretOffset).toLowerCase();
-
-  //   if (prefix.length > 0) {
-  //     const filteredDocs = functionDocs.filter((doc) =>
-  //       doc.name.toLowerCase().startsWith(prefix)
-  //     );
-  //     setSuggestions(filteredDocs);
-  //   } else {
-  //     setSuggestions([]);
-  //   }
-  // };
-
-  // // --- Function to get Caret Coordinates and update suggestions ---
-  // const updateCaretPosition = () => {
-  //   const selection = window.getSelection();
-  //   let currentText = "";
-  //   let caretOffset = -1;
-
-  //   if (editableDivRef.current) {
-  //     currentText = editableDivRef.current.textContent || "";
-  //   }
-
-  //   if (selection && selection.rangeCount > 0) {
-  //     const range = selection.getRangeAt(0);
-  //     caretOffset = range.startOffset;
-
-  //     if (
-  //       editableDivRef.current &&
-  //       editableDivRef.current.contains(range.commonAncestorContainer)
-  //     ) {
-  //       const rect = range.getBoundingClientRect();
-  //       setCaretPos({
-  //         top: rect.top,
-  //         left: rect.left,
-  //         bottom: rect.bottom,
-  //         right: rect.right,
-  //         height: rect.height,
-  //         width: rect.width,
-  //       });
-  //     } else {
-  //       setCaretPos(null);
-  //     }
-  //   } else {
-  //     setCaretPos(null);
-  //   }
-
-  //   if (caretOffset >= 0) {
-  //     updateSuggestions(currentText, caretOffset);
-  //   } else {
-  //     setSuggestions([]);
-  //   }
-  // };
-
-  // // --- Function to insert suggestion ---
-  // const insertSuggestion = (suggestion: FunctionDoc) => {
-  //   if (!editableDivRef.current) return;
-
-  //   const selection = window.getSelection();
-  //   if (!selection || selection.rangeCount === 0) return;
-
-  //   const range = selection.getRangeAt(0);
-  //   const currentText = editableDivRef.current.textContent || "";
-  //   const caretOffset = range.startOffset;
-
-  //   let startIndex = caretOffset;
-  //   while (startIndex > 0 && /\w/.test(currentText[startIndex - 1] || "")) {
-  //     startIndex--;
-  //   }
-
-  //   const textBefore = currentText.substring(0, startIndex);
-  //   const textAfter = currentText.substring(caretOffset);
-  //   const newText = textBefore + suggestion.name + textAfter;
-
-  //   ignoreSuggestionsRef.current = true;
-  //   setTextInput(newText);
-  //   editableDivRef.current.textContent = newText;
-
-  //   const newCaretPosition = startIndex + suggestion.name.length;
-  //   range.setStart(
-  //     editableDivRef.current.firstChild || editableDivRef.current,
-  //     newCaretPosition
-  //   );
-  //   range.setEnd(
-  //     editableDivRef.current.firstChild || editableDivRef.current,
-  //     newCaretPosition
-  //   );
-  //   selection.removeAllRanges();
-  //   selection.addRange(range);
-
-  //   setSuggestions([]);
-  //   setCaretPos(null);
-  //   setFocusedSuggestionIndex(-1);
-
-  //   setTimeout(() => {
-  //     ignoreSuggestionsRef.current = false;
-  //   }, 50);
-  // };
-
-  // // --- Handle selection changes (click, arrow keys without suggestions) ---
-  // const handleSelectionChange = () => {
-  //   if (ignoreSuggestionsRef.current) return;
-  //   setTimeout(updateCaretPosition, 0);
-  // };
-
-  // const selectPreviousSuggestion = () => {
-  //   setFocusedSuggestionIndex((prev) => Math.max(prev - 1, 0));
-  // };
-
-  // const selectNextSuggestion = () => {
-  //   setFocusedSuggestionIndex((prev) =>
-  //     Math.min(prev + 1, suggestions.length - 1)
-  //   );
-  // };
-
-  // // --- Handle Keyboard Navigation/Insertion ---
-  // const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-  //   if (suggestions.length > 0 && caretPos) {
-  //     switch (e.key) {
-  //       case "ArrowDown":
-  //         e.preventDefault();
-  //         selectNextSuggestion();
-  //         break;
-  //       case "ArrowUp":
-  //         e.preventDefault();
-  //         selectPreviousSuggestion();
-  //         break;
-  //       case "Enter":
-  //         e.preventDefault();
-  //         if (
-  //           focusedSuggestionIndex >= 0 &&
-  //           suggestions[focusedSuggestionIndex]
-  //         ) {
-  //           insertSuggestion(suggestions[focusedSuggestionIndex]);
-  //         }
-  //         break;
-  //       case "Escape":
-  //         e.preventDefault();
-  //         setSuggestions([]);
-  //         setCaretPos(null);
-  //         break;
-  //       case "Tab":
-  //         if (
-  //           focusedSuggestionIndex >= 0 &&
-  //           suggestions[focusedSuggestionIndex]
-  //         ) {
-  //           e.preventDefault();
-  //           insertSuggestion(suggestions[focusedSuggestionIndex]);
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   }
-  // };
 
   return (
     <div
@@ -334,26 +161,46 @@ export function AutocompleteSuggestions({
       }}
     >
       {suggestions.map((doc, index) => (
-        <div
+        <AutomcompleteSuggetionsItem
           key={doc.name}
-          className={cn(
-            "p-1 cursor-pointer rounded-sm",
-            index === focusedSuggestionIndex &&
-              "bg-accent text-accent-foreground"
-          )}
-          onClick={(e) => {
-            e.stopPropagation();
-            insertSuggestion(doc);
-          }}
-          ref={(el) => {
-            if (el && index === focusedSuggestionIndex) {
-              el.scrollIntoView({ block: "nearest", inline: "nearest" });
-            }
-          }}
-        >
-          {doc.name}
-        </div>
+          doc={doc}
+          index={index}
+          focusedSuggestionIndex={focusedSuggestionIndex}
+          insertSuggestion={insertSuggestion}
+        />
       ))}
+    </div>
+  );
+}
+
+export function AutomcompleteSuggetionsItem({
+  doc,
+  index,
+  focusedSuggestionIndex,
+  insertSuggestion,
+}: {
+  doc: FunctionDoc;
+  index: number;
+  focusedSuggestionIndex: number;
+  insertSuggestion: (suggestion: FunctionDoc) => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "p-1 cursor-pointer rounded-sm",
+        index === focusedSuggestionIndex && "bg-accent text-accent-foreground"
+      )}
+      onClick={(e) => {
+        e.stopPropagation();
+        insertSuggestion(doc);
+      }}
+      ref={(el) => {
+        if (el && index === focusedSuggestionIndex) {
+          el.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }
+      }}
+    >
+      {doc.name}
     </div>
   );
 }

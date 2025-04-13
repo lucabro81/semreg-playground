@@ -208,6 +208,8 @@ export function useAutocomplete(
     caretPos,
     suggestions,
     focusedSuggestionIndex,
+    updateCaretPosition,
+    updateSuggestions,
     handleKeyDown,
     handleSelectionChange,
     insertSuggestion, // Expose for direct click handling on suggestions
