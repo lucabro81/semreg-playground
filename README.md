@@ -40,4 +40,3 @@ This project is built using:
 
 - Implement the reverse process (from regex to semreg)
 - Add string validation functionality using the generated regular expressions
-- Implement autocompletion for semreg functions
