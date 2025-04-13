@@ -24,7 +24,6 @@ export function useAutocomplete(
   editableDivRef: RefObject<HTMLDivElement | null>,
   functionDocs: FunctionDoc[] | null,
   setTextInput: Dispatch<SetStateAction<string>>, // Need this for insertion
-  currentTextInput: string // Need current text for insertion logic
 ) {
   const [caretPos, setCaretPos] = useState<CaretCoords>(null);
   const [suggestions, setSuggestions] = useState<FunctionDoc[]>([]);

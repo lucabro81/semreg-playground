@@ -52,7 +52,7 @@ export function InputArea({
     handleSelectionChange,
     handleKeyDown,
     insertSuggestion,
-  } = useAutocomplete(editableDivRef, functionDocs, setTextInput, textInput);
+  } = useAutocomplete(editableDivRef, functionDocs, setTextInput);
 
   useEffect(() => {
     if (
