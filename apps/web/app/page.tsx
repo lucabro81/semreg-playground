@@ -2,10 +2,9 @@
 
 import { useResponsive } from "@/providers/response-provider";
 import { useState } from "react";
-import { InputArea } from "./components/input-area";
 import { MainMenu } from "./components/menu/menu";
 import { OutputArea } from "./components/output.area";
-
+import { InputArea } from "./components/input-area";
 export default function Page() {
   const [textInput, setTextInput] = useState("");
   const [result, setResult] = useState("");

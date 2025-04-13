@@ -15,6 +15,7 @@ export function MenuContent() {
   return (
     <Command>
       <CommandInput
+        autoFocus
         placeholder="Type a command or search..."
         onInput={() => {
           setClose(true);
