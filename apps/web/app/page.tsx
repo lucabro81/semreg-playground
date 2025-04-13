@@ -3,7 +3,7 @@
 import { useResponsive } from "@/providers/response-provider";
 import { useState } from "react";
 import { InputArea } from "./components/input-area";
-import { MainMenu } from "./components/menu";
+import { MainMenu } from "./components/menu/menu";
 import { OutputArea } from "./components/output.area";
 
 export default function Page() {

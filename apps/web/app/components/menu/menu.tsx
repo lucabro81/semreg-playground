@@ -3,47 +3,57 @@ import { Button } from "@workspace/ui/components/button";
 import {
   Menubar,
   MenubarContent,
-  MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarTrigger,
 } from "@workspace/ui/components/menubar";
 import { Menu, X } from "lucide-react";
-import { Fragment } from "react";
 
-type MenuItem = {
+import packageJson from "../../../package.json";
+import { MenuContent } from "./menu-content";
+
+type MenuItemType = {
   label: string;
   items: string[];
 };
 
-const menuItems: MenuItem[] = [
-  {
-    label: "Documentation",
-    items: ["New", "Open", "Save", "Save As"],
-  },
-];
-
 export function MenuDesktop() {
   return (
-    <Menubar className="border-none shadow-none px-2">
-      {menuItems.map((menu) => (
-        <MenubarMenu key={menu.label}>
-          <MenubarTrigger>{menu.label}</MenubarTrigger>
-          <MenubarContent>
-            {menu.items.map((item, index, array) => (
-              <Fragment key={item}>
-                <MenubarItem key={item}>{item}</MenubarItem>
-                {index === 1 && array.length > 3 && <MenubarSeparator />}
-              </Fragment>
-            ))}
+    <>
+      <Menubar className="border-none shadow-none px-2 flex justify-between">
+        <MenubarMenu>
+          <MenubarTrigger>Documentation</MenubarTrigger>
+          <MenubarContent className="h-[90vh] overflow-y-auto w-[400px]">
+            <MenuContent />
           </MenubarContent>
         </MenubarMenu>
-      ))}
-    </Menubar>
+        <div className="text-xs text-muted-foreground flex gap-2">
+          <span>
+            Made by{" "}
+            <a
+              href="https://github.com/lucabro81"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline"
+            >
+              @lucabro81
+            </a>
+          </span>
+          <span>-</span>
+          <a
+            href="https://github.com/lucabro81/semreg"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:underline"
+          >
+            SemReg v{packageJson.dependencies.semreg.replace("^", "")}
+          </a>
+        </div>
+      </Menubar>
+    </>
   );
 }
 
-export function MenuMobileItem({ menu }: { menu: MenuItem }) {
+export function MenuMobileItem({ menu }: { menu: MenuItemType }) {
   return (
     <div key={menu.label} className="px-4 py-2">
       <h3 className="text-sm font-medium mb-2">{menu.label}</h3>
@@ -86,9 +96,7 @@ export function MenuMobile() {
 
       {mobileMenuOpen && (
         <div className="absolute left-0 top-full w-full bg-background border shadow-md z-50 py-4">
-          {menuItems.map((menu) => (
-            <MenuMobileItem key={menu.label} menu={menu} />
-          ))}
+          <MenuContent />
         </div>
       )}
     </>
