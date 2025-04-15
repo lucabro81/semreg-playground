@@ -38,5 +38,9 @@ This project is built using:
 
 ## Todo
 
-- Implement the reverse process (from regex to semreg)
+- Implement the reverse process (from regex to semreg, something like the google translator does)
 - Add string validation functionality using the generated regular expressions
+- manage tab key (in the input area should work as in any other text editor)
+- autocomplete suggestions should be shown only when user is typing a word character, not when the user use arrow keys to navigate the text
+- add a apply button to the documentation panel, so the user can apply the operator to the input text
+- add a little help modal to the playground, with the main features of the playground
