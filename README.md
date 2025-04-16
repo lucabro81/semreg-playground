@@ -8,7 +8,8 @@ A simple playground application for experimenting with [semreg](https://github.c
 - [How to Use](#how-to-use)
 - [Development](#development)
 - [Credits](#credits)
-- [Todo](#todo)
+- [Planned Features (Todo)](#planned-features-todo)
+- [Known Bugs (Todo)](#known-bugs-todo)
 
 ## Features
 
@@ -36,12 +37,17 @@ This project is built using:
 - [semreg](https://github.com/lucabro81/semreg) - The semantic regular expression library
 - [Regex Colorizer](https://github.com/slevithan/regex-colorizer) by Steven Levithan - Inspiration for the regex highlighting functionality
 
-## Todo
+## Planned Features (Todo)
 
-- Implement the reverse process (from regex to semreg, something like the google translator does)
+- Implement the reverse process (from regex to semreg, similar to a translator)
 - Add string validation functionality using the generated regular expressions
-- manage tab key (in the input area should work as in any other text editor)
-- autocomplete suggestions should be shown only when user is typing a word character, not when the user use arrow keys to navigate the text
-- seems that the autocomplete selection doens't fire the text evaluation
-- add a apply button to the documentation panel, so the user can apply the operator to the input text
-- add a little help modal to the playground, with the main features of the playground
+- Manage tab key behavior in the input area (like standard text editors)
+- Add an 'Apply' button to the documentation panel to insert operators into the input text
+- Add a small help modal explaining the main features of the playground
+
+## Known Bugs (Todo)
+
+- Autocomplete suggestions currently show even when navigating text with arrow keys (should only show while typing word characters)
+- Selecting an autocomplete suggestion does not trigger the text evaluation/regex update
+- Autocomplete selection on mobile displays incorrect text fragments alongside the chosen suggestion
+- Horizontal scrolling occurs on mobile layout
